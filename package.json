@@ -1,0 +1,26 @@
+{
+  "name": "feattracker",
+  "version": "0.1.0",
+  "description": "Feat tracker app",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha -C"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shearn89/feattracker.io.git"
+  },
+  "author": "shearn89",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shearn89/feattracker.io/issues"
+  },
+  "homepage": "https://github.com/shearn89/feattracker.io#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "should": "^13.2.1"
+  }
+}
