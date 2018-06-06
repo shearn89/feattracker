@@ -1,5 +1,7 @@
 // badge.js
 // ========
+var debug = require('debug')('feattracker:routes:badge');
+
 module.exports = {
   get: function (req, res, next) {
     process(req, res, next, 'get');
@@ -13,10 +15,10 @@ var badges = [];
 
 var process = function (req, res, next, method) {
   if (!req.params.badgeId) {
-    console.log(method + '/badges');
+    debug(method + '/badges');
     res.json(badges);
   } else {
-    console.log(method + ' /badges/' + req.params.badgeId);
+    debug(method + ' /badges/' + req.params.badgeId);
     res.send(method + ' /badges/' + req.params.badgeId);
   }
   next();
