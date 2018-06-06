@@ -1,4 +1,4 @@
-# feattracker.io
+# feattracker
 Node app to track achievements/badges.
 
 ## Design ##
