@@ -4,15 +4,20 @@ var express = require('express');
 var chalk = require('chalk');
 var debug = require('debug')('feattracker:app');
 var morgan = require('morgan');
+var path = require('path');
 
 // app setup
 var app = express();
 app.use(morgan('tiny'));
 
+var views_dir = 'views';
+
 // routing
 var badge = require('./routes/badge');
 
-app.get('/', () => res.send('Hello World!'))
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, views_dir, 'index.html'))
+});
 app.get('/badges/:badgeId?*', badge.get);
 app.post('/badges/:badgeId?*', badge.post);
 
