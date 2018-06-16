@@ -10,7 +10,12 @@ var path = require('path');
 var app = express();
 app.use(morgan('tiny'));
 
+// Var setup
 var views_dir = 'views';
+var static_dir = 'public';
+
+// Static files
+app.use(express.static(path.join(__dirname, static_dir)));
 
 // routing
 var badge = require('./routes/badge');
