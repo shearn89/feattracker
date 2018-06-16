@@ -4,7 +4,8 @@
   "description": "Feat tracker app",
   "main": "app.js",
   "scripts": {
-    "test": "mocha -C"
+    "test": "mocha -C",
+    "start": "DEBUG=feattracker:* node app.js"
   },
   "repository": {
     "type": "git",
