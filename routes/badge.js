@@ -1,25 +1,25 @@
 // badge.js
 // ========
-var debug = require('debug')('feattracker:routes:badge');
+const debug = require('debug')('feattracker:routes:badge');
 
-module.exports = {
-  get: function (req, res, next) {
-    process(req, res, next, 'get');
-  },
-  post: function (req, res, next) {
-    process(req, res, next, 'post');
-  }
-}
+const badges = [];
 
-var badges = [];
-
-var process = function (req, res, next, method) {
+function process(req, res, next, method) {
   if (!req.params.badgeId) {
-    debug(method + '/badges');
+    debug(`${method}/badges`);
     res.json(badges);
   } else {
-    debug(method + ' /badges/' + req.params.badgeId);
-    res.send(method + ' /badges/' + req.params.badgeId);
+    debug(`${method} /badges/${req.params.badgeId}`);
+    res.send(`${method} /badges/${req.params.badgeId}`);
   }
   next();
 }
+
+module.exports = {
+  get(req, res, next) {
+    process(req, res, next, 'get');
+  },
+  post(req, res, next) {
+    process(req, res, next, 'post');
+  },
+};
