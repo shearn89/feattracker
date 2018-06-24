@@ -1,6 +1,10 @@
 const express = require('express');
-const sql = require('mssql');
-// const debug = require('debug')('feattracker:badges');
+const { MongoClient, ObjectID } = require('mongodb');
+const debug = require('debug')('feattracker:badges');
+
+const dbUri = process.env.MONGO_URI || 'mongodb://localhost:27017';
+const dbName = 'featdb';
+const colBadges = 'badges';
 
 const badgeRouter = express.Router();
 
@@ -8,29 +12,46 @@ function router(nav, title) {
   // Badge routing
   badgeRouter.route('/').get((req, res) => {
     (async function query() {
-      const request = new sql.Request();
-      const { recordset } = await request.query('select * from badges');
-      res.render('badgeList', { nav, title, badges: recordset });
+      let client;
+      try {
+        client = await MongoClient.connect(dbUri);
+        debug('connected to server');
+        const db = client.db(dbName);
+        debug('connected to mongo db');
+
+        const col = await db.collection(colBadges);
+
+        const badges = await col.find().toArray();
+        res.render('badgeList', { nav, title, badges });
+      } catch (err) {
+        debug(err.stack);
+      }
+      client.close();
     }());
   });
   badgeRouter.route('/:id')
-    .all((req, res, next) => {
-      (async function query() {
-        const { id } = req.params;
-        const request = new sql.Request();
-        const { recordset } = await request.input('id', sql.Int, id)
-          .query('select * from badges where id = @id');
-        [req.book] = recordset;
-        if (req.book == null) {
-          res.status(404).render('error', { nav, title });
-        }
-        next();
-      }());
-    })
     .get((req, res) => {
-      res.render('badge', { nav, title, badge: req.book });
+      const { id } = req.params;
+
+      (async function mongo() {
+        let client;
+        try {
+          client = await MongoClient.connect(dbUri);
+          debug('connected to server');
+          const db = client.db(dbName);
+          debug('connected to mongo db');
+
+          const col = await db.collection(colBadges);
+
+          const badge = await col.findOne({ _id: new ObjectID(id) });
+          debug(badge);
+          res.render('badge', { nav, title, badge });
+        } catch (err) {
+          debug(err.stack);
+        }
+        client.close();
+      }());
     });
   return badgeRouter;
 }
-
 module.exports = router;

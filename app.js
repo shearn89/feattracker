@@ -1,37 +1,21 @@
 // Entrypoint to the app.
 // requires
+require('dotenv').config();
+
 const express = require('express');
 const chalk = require('chalk');
 const debug = require('debug')('feattracker:app');
 const morgan = require('morgan');
 const path = require('path');
-const sql = require('mssql');
-require('dotenv').config();
 
 // app setup
 const app = express();
 
 // env vars
 const port = process.env.NODE_PORT || 3000;
-const dbServer = process.env.SQL_SERVER || 'localhost';
-const dbUser = process.env.SQL_USER || 'dbuser';
-const dbPassword = process.env.SQL_PASSWORD || 'dbpassword';
 
 // Var setup
 const staticDir = 'public';
-
-const sqlConfig = {
-  user: dbUser,
-  password: dbPassword,
-  server: dbServer,
-  database: 'FeatTrackerSQL',
-
-  options: {
-    encrypt: true,
-  },
-};
-
-sql.connect(sqlConfig).catch(err => debug(err));
 
 // Middleware
 app.use(morgan('tiny'));
@@ -54,8 +38,10 @@ const title = 'FeatTracker';
 
 // Routes
 const badgeRouter = require('./src/routes/badges')(nav, title);
+const adminRouter = require('./src/routes/admin');
 
 app.use('/badges', badgeRouter);
+app.use('/admin', adminRouter);
 app.get('/', (req, res) => res.render('index', { nav, title }));
 app.get('*', (req, res) => res.status(404).render('error', { nav, title }));
 
