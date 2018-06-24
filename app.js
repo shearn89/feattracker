@@ -33,7 +33,7 @@ const sqlConfig = {
 
 sql.connect(sqlConfig).catch(err => debug(err));
 
-// Static files
+// Middleware
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, staticDir)));
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
