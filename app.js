@@ -35,7 +35,7 @@ const nav = [
 const title = 'FeatTracker';
 
 // Routes
-const badgeRouter = require('./src/routes/badges')(nav);
+const badgeRouter = require('./src/routes/badges')(nav, title);
 
 app.use('/badges', badgeRouter);
 app.get('/', (req, res) => res.render('index', { nav, title }));
