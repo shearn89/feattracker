@@ -6,6 +6,7 @@ const debug = require('debug')('feattracker:app');
 const morgan = require('morgan');
 const path = require('path');
 const sql = require('mssql');
+require('dotenv').config();
 
 // app setup
 const app = express();
