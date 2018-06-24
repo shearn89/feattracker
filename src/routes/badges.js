@@ -2,30 +2,47 @@ const express = require('express');
 
 const badgeRouter = express.Router();
 
-const badges = [{
-  title: 'Presenter',
-  desc: 'Gave a presentation',
-  image: 'present.png',
-}];
+function router(nav) {
+  const badges = [{
+    title: 'Presenter',
+    desc: 'Gave a presentation',
+    image: 'present.png',
+  }, {
+    title: 'Coworker',
+    desc: 'Worked with another department',
+    image: 'coworker.png',
+  }, {
+    title: 'Traveller',
+    desc: 'Travelled abroad for work',
+    image: 'traveller.png',
+  }];
 
-// Badge routing
-badgeRouter.route('/')
-  .get((req, res) => {
-    res.render(
-      'badges',
-      {
-        title: 'FeatTracker',
-        nav: [
-          { link: '/badges', title: 'Badges' },
-          { link: '/users', title: 'Users' },
-        ],
-        badges,
-      },
-    );
-  });
-badgeRouter.route('/single')
-  .get((req, res) => {
-    res.send('hello single badges');
-  });
+  // Badge routing
+  badgeRouter.route('/')
+    .get((req, res) => {
+      res.render(
+        'badgeList',
+        {
+          nav,
+          title: 'FeatTracker',
+          badges,
+        },
+      );
+    });
+  badgeRouter.route('/:id')
+    .get((req, res) => {
+      const { id } = req.params;
+      res.render(
+        'badge',
+        {
+          nav,
+          title: 'FeatTracker',
+          badge: badges[id],
+        },
+      );
+    });
 
-module.exports = badgeRouter;
+  return badgeRouter;
+}
+
+module.exports = router;

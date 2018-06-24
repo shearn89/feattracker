@@ -15,9 +15,6 @@ const staticDir = 'public';
 // env vars
 const port = process.env.NODE_PORT || 3000;
 
-// Routes
-const badgeRouter = require('./src/routes/badges')
-
 // Static files
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, staticDir)));
@@ -26,22 +23,23 @@ app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist
 app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/popper.js/dist')));
 
+// Dynamic views
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-app.use('/badges', badgeRouter);
-app.get('/', (req, res) => {
-  res.render(
-    'index',
-    {
-      title: 'FeatTracker',
-      nav: [
-        { link: '/badges', title: 'Badges' },
-        { link: '/users', title: 'Users' },
-      ],
-    },
-  );
-});
+// Nav
+const nav = [
+  { link: '/badges', title: 'Badges' },
+  { link: '/users', title: 'Users' },
+];
+const title = 'FeatTracker';
 
-// run dis.
+// Routes
+const badgeRouter = require('./src/routes/badges')(nav);
+
+app.use('/badges', badgeRouter);
+app.get('/', (req, res) => res.render('index', { nav, title }));
+app.get('*', (req, res) => res.status(404).render('error', { nav, title }));
+
+// START THE SHOW!
 app.listen(port, () => debug(`App listening on port ${chalk.green(port)}`));
