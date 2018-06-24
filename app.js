@@ -16,7 +16,7 @@ const staticDir = 'public';
 const port = process.env.NODE_PORT || 3000;
 
 // Routes
-const badgeRouter = express.Router();
+const badgeRouter = require('./src/routes/badges')
 
 // Static files
 app.use(morgan('tiny'));
@@ -28,15 +28,6 @@ app.use('/js', express.static(path.join(__dirname, '/node_modules/popper.js/dist
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
-
-badgeRouter.route('/')
-  .get((req, res) => {
-    res.send('hello badges');
-  });
-badgeRouter.route('/single')
-  .get((req, res) => {
-    res.send('hello single badges');
-  });
 
 app.use('/badges', badgeRouter);
 app.get('/', (req, res) => {
