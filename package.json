@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha -C",
-    "start": "DEBUG=feattracker:* node app.js",
+    "start": "nodemon app.js",
     "lint": "eslint app.js"
   },
   "repository": {
@@ -22,10 +22,12 @@
     "bootstrap": "^4.1.1",
     "chalk": "^2.4.1",
     "debug": "^3.1.0",
+    "ejs": "^2.6.1",
     "eslint": "^4.19.1",
     "express": "^4.16.3",
     "jquery": "^3.3.1",
     "morgan": "^1.9.0",
+    "nodemon": "^1.17.5",
     "popper.js": "^1.14.3"
   },
   "devDependencies": {
@@ -33,5 +35,17 @@
     "eslint-plugin-import": "^2.12.0",
     "mocha": "^5.2.0",
     "should": "^13.2.1"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "development",
+      "NODE_PORT": "8080",
+      "DEBUG": "feattracker:*"
+    }
   }
 }
