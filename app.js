@@ -5,15 +5,32 @@ const chalk = require('chalk');
 const debug = require('debug')('feattracker:app');
 const morgan = require('morgan');
 const path = require('path');
+const sql = require('mssql');
 
 // app setup
 const app = express();
 
+// env vars
+const port = process.env.NODE_PORT || 3000;
+const dbServer = process.env.SQL_SERVER || 'localhost';
+const dbUser = process.env.SQL_USER || 'dbuser';
+const dbPassword = process.env.SQL_PASSWORD || 'dbpassword';
+
 // Var setup
 const staticDir = 'public';
 
-// env vars
-const port = process.env.NODE_PORT || 3000;
+const sqlConfig = {
+  user: dbUser,
+  password: dbPassword,
+  server: dbServer,
+  database: 'FeatTrackerSQL',
+
+  options: {
+    encrypt: true,
+  },
+};
+
+sql.connect(sqlConfig).catch(err => debug(err));
 
 // Static files
 app.use(morgan('tiny'));
