@@ -1,5 +1,4 @@
 // Entrypoint to the app.
-// requires
 require('dotenv').config();
 
 const express = require('express');
@@ -7,6 +6,10 @@ const chalk = require('chalk');
 const debug = require('debug')('feattracker:app');
 const morgan = require('morgan');
 const path = require('path');
+const bodyparser = require('body-parser');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 // app setup
 const app = express();
@@ -19,6 +22,13 @@ const staticDir = 'public';
 
 // Middleware
 app.use(morgan('tiny'));
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(session({secret: 'giraffes'}));
+
+require('./src/config/passport.js')(app);
+
 app.use(express.static(path.join(__dirname, staticDir)));
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
@@ -38,10 +48,12 @@ const title = 'FeatTracker';
 
 // Routes
 const badgeRouter = require('./src/routes/badges')(nav, title);
-const adminRouter = require('./src/routes/admin');
+const adminRouter = require('./src/routes/admin')(nav, title);
+const authRouter = require('./src/routes/auth')(nav, title);
 
-app.use('/badges', badgeRouter);
+ app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
+app.use('/badges', badgeRouter);
 app.get('/', (req, res) => res.render('index', { nav, title }));
 app.get('*', (req, res) => res.status(404).render('error', { nav, title }));
 
