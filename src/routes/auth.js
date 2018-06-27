@@ -49,11 +49,8 @@ function router(nav) {
     }));
   authRouter.route('/profile')
     .all((req, res, next) => {
-      if (req.user) {
-        next();
-      } else {
-        res.redirect('/');
-      }
+      if (req.user) { next(); }
+      res.redirect('/');
     })
     .get((req, res) => {
       debug('profile rendered');
