@@ -1,5 +1,5 @@
 const passport = require('passport');
-require('./strategies/local.strategy');
+require('./strategies/local.strategy')();
 
 module.exports = function passportConfig(app) {
   app.use(passport.initialize());
@@ -7,13 +7,12 @@ module.exports = function passportConfig(app) {
 
   // Store
   passport.serializeUser((user, done) => {
-    done(null, user)
+    done(null, user);
   });
 
   // Retrieve
   passport.deserializeUser((user, done) => {
     // find user by id?
-    done(null, user)
+    done(null, user);
   });
-
-}
+};

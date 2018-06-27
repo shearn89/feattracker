@@ -5,10 +5,10 @@ module.exports = function localStrategy() {
   passport.use(new Strategy(
     {
       usernameField: 'email',
-      passwordField: 'password'
+      passwordField: 'password',
     }, (email, password, done) => {
       const user = {
-        email, password
+        email, password,
       }
       done(null, user);
     }));
