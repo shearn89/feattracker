@@ -42,6 +42,8 @@ app.set('view engine', 'ejs');
 const nav = [
   { link: '/badges', title: 'Badges' },
   { link: '/users', title: 'Users' },
+  { link: '/auth/signIn', title: 'Login' },
+  { link: '/auth/logout', title: 'Logout' },
 ];
 const title = 'FeatTracker';
 
