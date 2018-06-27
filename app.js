@@ -24,7 +24,7 @@ app.use(morgan('tiny'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({ secret: 'giraffes' }));
+app.use(session({ secret: 'giraffes', resave: false, saveUninitialized: false }));
 
 require('./src/config/passport.js')(app);
 
