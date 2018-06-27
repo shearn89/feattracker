@@ -50,7 +50,7 @@ const title = 'FeatTracker';
 // Routes
 const badgeRouter = require('./src/routes/badges')(nav, title);
 const adminRouter = require('./src/routes/admin')(nav, title);
-const authRouter = require('./src/routes/auth')(nav);
+const authRouter = require('./src/routes/auth')(nav, title);
 
 app.use('/auth', authRouter);
 // app.use('/admin', adminRouter);

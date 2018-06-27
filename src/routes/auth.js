@@ -4,7 +4,7 @@ const authController = require('../controllers/auth');
 
 const authRouter = express.Router();
 
-function router(nav) {
+function router(nav, title) {
   const {
     signUp,
     getSignIn,
@@ -12,7 +12,7 @@ function router(nav) {
     getLogout,
     getProfile,
     middleware,
-  } = authController(nav);
+  } = authController(nav, title);
   authRouter.route('/signUp')
     .post(signUp);
   authRouter.route('/signIn')
