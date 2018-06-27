@@ -7,7 +7,6 @@ const debug = require('debug')('feattracker:app');
 const morgan = require('morgan');
 const path = require('path');
 const bodyparser = require('body-parser');
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -25,7 +24,7 @@ app.use(morgan('tiny'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret: 'giraffes'}));
+app.use(session({ secret: 'giraffes' }));
 
 require('./src/config/passport.js')(app);
 
@@ -49,12 +48,15 @@ const title = 'FeatTracker';
 // Routes
 const badgeRouter = require('./src/routes/badges')(nav, title);
 const adminRouter = require('./src/routes/admin')(nav, title);
-const authRouter = require('./src/routes/auth')(nav, title);
+const authRouter = require('./src/routes/auth')(nav);
 
 app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
+// app.use('/admin', adminRouter);
 app.use('/badges', badgeRouter);
-app.get('/', (req, res) => res.render('index', { nav, title }));
+app.get('/', (req, res) => {
+  debug('root rendered');
+  res.render('index', { nav, title })
+});
 app.get('*', (req, res) => res.status(404).render('error', { nav, title }));
 
 // START THE SHOW!

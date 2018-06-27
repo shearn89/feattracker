@@ -1,4 +1,5 @@
 const passport = require('passport');
+const debug = require('debug')('feattracker:passport');
 require('./strategies/local.strategy')();
 
 module.exports = function passportConfig(app) {
@@ -7,12 +8,13 @@ module.exports = function passportConfig(app) {
 
   // Store
   passport.serializeUser((user, done) => {
+    debug('serialized user');
     done(null, user);
   });
 
   // Retrieve
   passport.deserializeUser((user, done) => {
-    // find user by id?
+    debug('deserialized user');
     done(null, user);
   });
 };

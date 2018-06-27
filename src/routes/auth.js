@@ -26,21 +26,18 @@ function router(nav) {
           const user = { email, password };
 
           const results = await col.insertOne(user);
-          debug(results);
           req.login(results.ops[0], () => {
             res.redirect('/auth/profile');
           });
         } catch (err) {
           debug(err);
         }
+        client.close();
       }());
-    });
-  authRouter.route('/profile')
-    .get((req, res) => {
-      res.json(req.user);
     });
   authRouter.route('/signIn')
     .get((req, res) => {
+      debug('sign in rendered');
       res.render('signIn', {
         nav,
         title: 'Sign In',
@@ -50,6 +47,11 @@ function router(nav) {
       successRedirect: '/auth/profile',
       failureRedirect: '/',
     }));
+  authRouter.route('/profile')
+    .get((req, res) => {
+      debug('profile rendered');
+      res.json(req.user);
+    });
   return authRouter;
 }
 
