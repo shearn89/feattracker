@@ -50,7 +50,9 @@ function router(nav) {
   authRouter.route('/logout')
     .get((req, res) => {
       debug('logout requested');
-      req.logout();
+      req.logout(req.user);
+      // res.locals.msg = { severity: 'warning', msg: 'You have been logged out.' };
+      res.redirect('/');
     });
   authRouter.route('/profile')
     .all((req, res, next) => {
