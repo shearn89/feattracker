@@ -1,27 +1,44 @@
+<!doctype html>
+<html lang="en">
 <%- include('header') %>
-    <!-- Begin page content -->
-    <main role="main" class="container">
-      <h1 class="mt-5">All badges</h1>
-      <p class="lead">This is a list of all badges available.</p>
-      <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Badge</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i=0; i<badges.length; i++) { %>
-          <tr>
-            <td><%= badges[i].image %></td>
-            <td><a href="/badges/<%= badges[i]._id %>"><%= badges[i].title %></a></td>
-            <td><%= badges[i].description %></td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-      </div>
-    </main>
-<%- include('footer') %>
+  <%- include('nav') %>
+
+    <body>
+      <!-- Begin page content -->
+      <main role="main" class="container">
+        <h1 class="mt-5">All badges</h1>
+        <p class="lead">This is a list of all badges available.</p>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Badge</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i=0; i<badges.length; i++) { %>
+                <tr>
+                  <td>
+                    <%= badges[i].image %>
+                  </td>
+                  <td>
+                    <a href="/badges/<%= badges[i]._id %>">
+                      <%= badges[i].title %>
+                    </a>
+                  </td>
+                  <td>
+                    <%= badges[i].description %>
+                  </td>
+                </tr>
+                <% } %>
+            </tbody>
+          </table>
+        </div>
+      </main>
+      <%- include('footer') %>
+        <%- include('tail') %>
+    </body>
+
+</html>

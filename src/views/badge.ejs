@@ -1,23 +1,38 @@
+<!doctype html>
+<html lang="en">
 <%- include('header') %>
-    <!-- Begin page content -->
-    <main role="main" class="container">
-      <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Badge</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= badge.image %></td>
-            <td><%= badge.title %></td>
-            <td><%= badge.desc %></td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-    </main>
-<%- include('footer') %>
+  <%- include('nav') %>
+
+    <body>
+      <!-- Begin page content -->
+      <main role="main" class="container">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Badge</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <%= badge.image %>
+                </td>
+                <td>
+                  <%= badge.title %>
+                </td>
+                <td>
+                  <%= badge.desc %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+      <%- include('footer') %>
+        <%- include('tail') %>
+    </body>
+
+</html>
