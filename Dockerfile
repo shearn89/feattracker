@@ -1,4 +1,4 @@
-FROM node:10.5-alpine
+FROM node:8-alpine
 
 ENV NODE_ENV production
 ENV NODE_PORT 8080
