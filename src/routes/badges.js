@@ -11,8 +11,11 @@ const badgeRouter = express.Router();
 function router(nav, title) {
   // Badge routing
   badgeRouter.use((req, res, next) => {
-    if (req.user) { next(); }
-    res.redirect('/');
+    if (req.user) {
+      next();
+    } else {
+      res.redirect('/');
+    }
   });
   badgeRouter.route('/').get((req, res) => {
     (async function query() {
