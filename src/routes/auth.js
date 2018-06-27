@@ -47,6 +47,11 @@ function router(nav) {
       successRedirect: '/auth/profile',
       failureRedirect: '/',
     }));
+  authRouter.route('/logout')
+    .get((req, res) => {
+      debug('logout requested');
+      req.logout();
+    });
   authRouter.route('/profile')
     .all((req, res, next) => {
       if (req.user) { next(); }
