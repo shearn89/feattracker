@@ -48,6 +48,13 @@ function router(nav) {
       failureRedirect: '/',
     }));
   authRouter.route('/profile')
+    .all((req, res, next) => {
+      if (req.user) {
+        next();
+      } else {
+        res.redirect('/');
+      }
+    })
     .get((req, res) => {
       debug('profile rendered');
       res.json(req.user);
